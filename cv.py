@@ -46,10 +46,10 @@ while True:
 
     for (x, y, w, h) in rects:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        boxheight = h
-        boxwidth = w
-        offsetx = x
-        offsety = y
+        boxheight = float(h)
+        boxwidth = float(w)
+        offsetx = float(x)
+        offsety = float(y)
 
     data = {
         'boxheight': boxheight,
