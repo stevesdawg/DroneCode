@@ -1,11 +1,12 @@
 var arDrone = require('ar-drone');
 var http = require('http');
+var ff = require('ffmpeg');
 
 var drone = arDrone.createClient();
-drone.takeoff();
+// drone.takeoff();
 
 
-setTimeout(function(){drone.land()}, 5000);
+// setTimeout(function(){drone.land()}, 5000);
 
 var pngStream = drone.getPngStream();
 
