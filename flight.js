@@ -3,7 +3,9 @@ var http = require('http');
 var ff = require('ffmpeg');
 
 var drone = arDrone.createClient();
+console.log('taking off')
 drone.takeoff();
+console.log('took off')
 
 var pngStream = drone.getPngStream();
 var count = 0;
@@ -21,10 +23,11 @@ var server = http.createServer(function(req, res) {
         var body = '';
         req.on('data', function(data) {
             jsonObj = JSON.parse(data);
-            if (jsonObj.boxheight == -1) {
+            var boxh = parseInt(jsonObj.boxheight);
+            if (boxh == -1) {
                 drone.stop();
                 count += 1;
-                if (count > 20) {
+                if (count > 100) {
                     drone.land();
                 }
             }
@@ -32,23 +35,25 @@ var server = http.createServer(function(req, res) {
                 count = 0;
                 var centerx = 200;
                 var centery = 225/2.0;
-                if (jsonObj.boxcenter[0] < centerx) {
-                    drone.left((centerx - jsonObj.boxcenter[0]) * 0.3 / centerx);
+                var boxcX = parseInt(jsonObj.boxcenterx);
+                var boxcY = parseInt(jsonObj.boxcentery);
+                if (boxcX < centerx) {
+                    drone.left((centerx - boxcX) * 0.45 / centerx);
                 } else {
-                    drone.right((jsonObj.boxcenter[0] - centerx) * 0.3 / centerx);
+                    drone.right((boxcX - centerx) * 0.45 / centerx);
                 }
 
-                if (jsonObj.boxcenter[1] < centery) {
-                    drone.down((centery - jsonObj.boxcenter[1]) * 0.3 / centery);
+                if (boxcY < centery) {
+                    drone.down((centery - boxcY) * 0.45 / centery);
                 } else {
-                    drone.up((jsonObj.boxcenter[1] - centery) * 0.3 / centery);
+                    drone.up((boxcY - centery) * 0.45 / centery);
                 }
 
-                var scaleFactor = jsonObj.boxheight / 210.0;
-                if (scaledFactor > 1) {
-                    drone.back(0.4 * scaledFactor);
+                var scaleFactor = boxh / 190.0;
+                if (scaleFactor > 1) {
+                    drone.back(0.5 * scaleFactor);
                 } else {
-                    drone.front(0.4 * 1/scaledFactor)
+                    drone.front(0.5 * 1/scaleFactor)
                 }
             }
         });

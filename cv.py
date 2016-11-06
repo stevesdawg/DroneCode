@@ -51,13 +51,15 @@ while True:
         offsetx = x
         offsety = y
 
+    print (rects)
     data = {
-        'boxheight': boxheight,
-        'boxwidth': boxwidth,
-        'boxcenterx': (offsetx + boxwidth)/2,
-        'boxcentery': (offsety + boxheight)/2
+        'boxheight': str(boxheight),
+        'boxwidth': str(boxwidth),
+        'boxcenterx': str((offsetx + boxwidth)/2),
+        'boxcentery': str((offsety + boxheight)/2)
     }
 
+    print(data)
 
     jsonString = json.dumps(data)
     print(jsonString)
