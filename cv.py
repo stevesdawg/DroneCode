@@ -14,9 +14,9 @@ def url_to_img(url):
      img = cv2.imdecode(img, cv2.IMREAD_COLOR)
      return img
 
-for i in xrange(100000000):
-    cv2.imshow('img', url_to_img('http://localhost:8080/'))
-    cv2.waitKey(1)
+# for i in xrange(100000000):
+#     cv2.imshow('img', url_to_img('http://localhost:8080/'))
+#     cv2.waitKey(1)
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
@@ -55,11 +55,17 @@ print(rects)
 for (x, y, w, h) in rects:
     cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
+
+height, width, channels = image.shape
+
 data = {
-    'height': h,
-    'width': w,
-    'center': [(y + h)/2, (x+w)/2]
+    'imgheight': height,
+    'imgwidth': width,
+    'boxheight': h,
+    'boxwidth': w,
+    'boxcenter': [(y + h)/2, (x+w)/2]
 }
+
 
 jsonString = json.dumps(data)
 req = urlo.Request('http://localhost:8080/', jsonString, {'Content-Type': 'application/json'})
