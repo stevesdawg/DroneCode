@@ -49,11 +49,11 @@ var server = http.createServer(function(req, res) {
                     drone.up((boxcY - centery) * 0.30 / centery);
                 }
 
-                var scaleFactor = boxh / 190.0;
+                var scaleFactor = boxh / 150.0;
                 if (scaleFactor > 1) {
-                    drone.back(0.4 * scaleFactor);
+                    drone.back(0.2 * scaleFactor);
                 } else {
-                    drone.front(0.4 * 1/scaleFactor);
+                    drone.front(0.2 * 1/scaleFactor);
                 }
             }
         });

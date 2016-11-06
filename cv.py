@@ -18,15 +18,13 @@ def url_to_img(url):
 #     cv2.imshow('img', url_to_img('http://localhost:8080/'))
 #     cv2.waitKey(1)
 
-# construct the argument parse and parse the arguments
 
 winStride = (8, 8)
 padding = (16, 16)
 meanShift = False
 scale = 1.05
-
+prev = None
 while True:
-
     hog = cv2.HOGDescriptor()
     hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
@@ -45,11 +43,19 @@ while True:
     offsety = -1
 
     for (x, y, w, h) in rects:
-        cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
         boxheight = float(h)
         boxwidth = float(w)
         offsetx = float(x)
         offsety = float(y)
+
+    prev = (offsetx, offsety, boxwidth, boxheight)
+    rects = sorted(rects, key=lambda r: abs(offsety - r[1]))
+    if len(rects) > 0:
+        boxheight = rects[0][3]
+        boxwidth = rects[0][2]
+        offsetx = rects[0][0]
+        offsety = rects[0][1]
 
     print (rects)
     data = {
@@ -58,6 +64,8 @@ while True:
         'boxcenterx': str((offsetx + boxwidth)/2),
         'boxcentery': str((offsety + boxheight)/2)
     }
+
+
 
     print(data)
 
