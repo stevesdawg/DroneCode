@@ -22,8 +22,26 @@ var server = http.createServer(function(req, res) {
         console.log("POST");
         var body = '';
         req.on('data', function(data) {
-            body += data;
-            body
+            jsonObj = JSON.parse(data);
+            if (jsonObj.boxheight == -1) {
+                drone.stop();
+                setTimeout(function() {drone.land()}, 3000);
+            }
+            else {
+                var centerx = 200;
+                var centery = 225/2.0;
+                if (jsonObj.boxcenter[0] < centerx) {
+                    drone.left((centerx - jsonObj.boxcenter[0]) * 0.3 / centerx);
+                } else {
+                    drone.right((jsonObj.boxcenter[0] - centerx) * 0.3 / centerx);
+                }
+
+                if (jsonObj.boxcenter[1] < centery) {
+                    drone.down((centery - jsonObj.boxcenter[1]) * 0.3 / centery);
+                } else {
+                    drone.up(jsonObj.boxcenter[1] - centery) * 0.3 / centery);
+                }
+            }
         });
         req.on('end', function() {
             console.log("Body: " + body);
