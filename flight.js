@@ -18,6 +18,16 @@ pngStream
     });
 
 var server = http.createServer(function(req, res) {
+    if (req.method == "POST") {
+        console.log("POST");
+        var body = '';
+        req.on('data', function(data) {
+            body += data;
+        });
+        req.on('end', function() {
+            console.log("Body: " + body);
+        });
+    }
     if (!lastPng) {
         res.writeHead(503);
         res.end('Did not receive any png data yet.');
