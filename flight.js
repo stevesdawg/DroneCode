@@ -66,17 +66,6 @@ var server = http.createServer(function(req, res) {
     res.end(lastPng);
 });
 
-var stdin = process.openStdin();
-require('tty').setRawMode(true);
-var rl = require('readline');
-
-stdin.on('keypress', function (chunk, key) {
-    process.stdout.write('Get Chunk: ' + chunk + '\n');
-    if (key && key.name == ' ') {
-        drone.land();
-    }
-});
-
 server.listen(8080, function() {
     console.log('Serving latest png on port 8080...');
 });
