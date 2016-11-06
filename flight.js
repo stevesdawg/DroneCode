@@ -23,6 +23,7 @@ var server = http.createServer(function(req, res) {
         var body = '';
         req.on('data', function(data) {
             body += data;
+            body
         });
         req.on('end', function() {
             console.log("Body: " + body);

@@ -6,6 +6,7 @@ import cv2
 
 import numpy as np
 import urllib2 as urlo
+import json
 
 def url_to_img(url):
      data = urlo.urlopen(url).read()
@@ -53,6 +54,20 @@ print(rects)
 # draw the original bounding boxes
 for (x, y, w, h) in rects:
     cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+data = {
+    'height': h,
+    'width': w,
+    'center': [(y + h)/2, (x+w)/2]
+}
+
+jsonString = json.dumps(data)
+req = urlo.Request('http://localhost:8080/', jsonString, {'Content-Type': 'application/json'})
+f = urlo.urlopen(req)
+response = f.read()
+f.close()
+
+print(response)
 
 # show the output image
 cv2.imshow("Detections", image)
