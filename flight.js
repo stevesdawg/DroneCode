@@ -38,22 +38,22 @@ var server = http.createServer(function(req, res) {
                 var boxcX = parseInt(jsonObj.boxcenterx);
                 var boxcY = parseInt(jsonObj.boxcentery);
                 if (boxcX < centerx) {
-                    drone.left((centerx - boxcX) * 0.45 / centerx);
+                    drone.left((centerx - boxcX) * 0.30 / centerx);
                 } else {
-                    drone.right((boxcX - centerx) * 0.45 / centerx);
+                    drone.right((boxcX - centerx) * 0.30 / centerx);
                 }
 
                 if (boxcY < centery) {
-                    drone.down((centery - boxcY) * 0.45 / centery);
+                    drone.down((centery - boxcY) * 0.30 / centery);
                 } else {
-                    drone.up((boxcY - centery) * 0.45 / centery);
+                    drone.up((boxcY - centery) * 0.30 / centery);
                 }
 
                 var scaleFactor = boxh / 190.0;
                 if (scaleFactor > 1) {
-                    drone.back(0.5 * scaleFactor);
+                    drone.back(0.4 * scaleFactor);
                 } else {
-                    drone.front(0.5 * 1/scaleFactor)
+                    drone.front(0.4 * 1/scaleFactor);
                 }
             }
         });
