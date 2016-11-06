@@ -3,10 +3,7 @@ var http = require('http');
 var ff = require('ffmpeg');
 
 var drone = arDrone.createClient();
-// drone.takeoff();
-
-
-// setTimeout(function(){drone.land()}, 5000);
+drone.takeoff();
 
 var pngStream = drone.getPngStream();
 var count = 0;

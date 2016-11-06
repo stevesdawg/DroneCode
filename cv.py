@@ -58,10 +58,10 @@ while True:
     }
 
 
-    jsonString = str(data)
+    jsonString = json.dumps(data)
+    print(jsonString)
     req = urlo.Request('http://localhost:8080/', jsonString, {'Content-Type': 'application/json'})
     f = urlo.urlopen(req)
-    response = f.read()
     f.close()
 
     # show the output image
