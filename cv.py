@@ -54,7 +54,8 @@ while True:
     data = {
         'boxheight': boxheight,
         'boxwidth': boxwidth,
-        'boxcenter': [(offsetx+boxwidth)/2, (offsety + boxheight)/2]
+        'boxcenterx': (offsetx + boxwidth)/2,
+        'boxcentery': (offsety + boxheight)/2
     }
 
 
